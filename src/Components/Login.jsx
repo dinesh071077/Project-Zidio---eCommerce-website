@@ -1,121 +1,126 @@
-import React, { useState } from "react";
+
+
+import React, { useEffect, useState } from "react";
 import { FaRegUser, FaLock } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { jwtDecode } from "jwt-decode";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [emailerror, setemailError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const getStorage = localStorage.getItem("username");
-  const getPassword = localStorage.getItem("password");
-  const getnewPassword = localStorage.getItem("newpassword");
+  const handleLogin = async (e) => {
+  e.preventDefault();
+  setLoading(true);
 
-  const handleLogin = (e) => {
-    e.preventDefault();
+  try {
+    const response = await fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-    if (email === getStorage && password === getPassword) {
-      alert("Login successfully");
-      window.location.href = "/";
-    } else if (password === getnewPassword) {
-      alert("Login successfully");
-      window.location.href = "/";
-    } else {
-      alert("Invalid username or password");
-    }
-  };
+    const result = await response.json();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    if (response.ok) {
+      alert("Login successful!");
 
-    const data = {
-      email: email,
-      password: password,
-    };
+      // ✅ Save token and user info
+      localStorage.setItem("token", result.token);
+      localStorage.setItem("role", result.user.role); // store role from user object
+      localStorage.setItem("username", result.user.username);
+      localStorage.setItem("email", result.user.email);
+      localStorage.setItem("userId", result.user.id);
 
-    try {
-      const response = await fetch("http://127.0.0.1:5000", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to register user");
+      // ✅ Redirect based on role
+      if (result.user.role === "admin") {
+        window.location.href = "/admin"; // Redirect to admin dashboard
+      } else {
+        window.location.href = "/"; // Redirect to user homepage
       }
-
-      const result = await response.json();
-      console.log("User registered successfully!", result);
-    } catch (error) {
-      console.error("Error registering user:", error.message);
+    } else {
+      alert(result.message || "Login failed");
     }
+  } catch (error) {
+    console.error("Error during login:", error);
+    alert("Error: " + error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
+  const handleGoogleCallback = (response) => {
+    const userObject = jwtDecode(response.credential);
+    console.log("Google User:", userObject);
+    alert(`Welcome ${userObject.name}`);
+   
+    window.location.href = "/";
   };
+
+  useEffect(() => {
+    if (window.google) {
+      window.google.accounts.id.initialize({
+        client_id: "1061635173504-4r9thfmspnms00ne5b223amelejm572s.apps.googleusercontent.com",
+        callback: handleGoogleCallback,
+      });
+      window.google.accounts.id.renderButton(
+        document.getElementById("googleSignInDiv"),
+        { theme: "outline", size: "large", width: "100%" }
+      );
+    }
+  }, []);
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center text-blue-600">TRENDY</h1>
+    <div className="w-full min-h-screen flex justify-center items-center bg-gradient-to-b from-[#1e293b] to-[#0f172a] px-4">
+      <motion.div className="bg-[#1e293b] shadow-xl rounded-2xl p-8 w-full max-w-md text-white">
+        <h1 className="text-4xl font-bold text-center text-blue-400 mb-4">Login</h1>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleLogin(e);
-            handleSubmit(e);
-          }}
-        >
-          <div className="mb-4">
-            <div className="relative">
-              <input
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Username"
-                className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              <FaRegUser className="absolute right-3 top-3 text-gray-400" />
-            </div>
-            <p className="text-red-500 text-sm mt-1">{emailerror}</p>
+        {/* Google Sign-In Button */}
+        <div id="googleSignInDiv" className="mb-6 text-center"></div>
+
+        <form onSubmit={handleLogin}>
+          <div className="mb-4 relative">
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-10 py-3 bg-[#334155] text-white rounded-xl"
+            />
+            <FaRegUser className="absolute left-3 top-3.5 text-gray-400" />
           </div>
 
-          <div className="mb-4">
-            <div className="relative">
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              <FaLock className="absolute right-3 top-3 text-gray-400" />
-            </div>
+          <div className="mb-4 relative">
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-10 py-3 bg-[#334155] text-white rounded-xl"
+            />
+            <FaLock className="absolute left-3 top-3.5 text-gray-400" />
           </div>
 
-          <div className="flex justify-between items-center mb-4">
-            <label className="flex items-center">
-              <input type="checkbox" className="mr-2" />
-              <span className="text-sm text-gray-600">Remember me</span>
-            </label>
-            <a href="/Forgot" className="text-sm text-blue-500 hover:underline">
-              Forgot Password?
-            </a>
-          </div>
+          {error && <p className="text-red-400 text-sm mb-3">{error}</p>}
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition duration-300"
+            disabled={loading}
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-xl font-semibold"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
 
-          <div className="mt-4 text-center">
-            <p className="text-gray-600">
-              Don't have an account?{" "}
-              <a href="/Register" className="text-blue-500 hover:underline">
-                Register
-              </a>
-            </p>
+          <div className="mt-6 text-center text-sm text-gray-300">
+            Don't have an account?{" "}
+            <a href="/Register" className="text-blue-400 hover:underline">Register</a>
           </div>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 }
