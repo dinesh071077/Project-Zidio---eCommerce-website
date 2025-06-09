@@ -20,12 +20,13 @@ import Marvel from './Components/Marvel';
 import Dashboard from './Adminpanel/Dashboard';
 import AddTshirtForm from './Adminpanel/AddTshirtForm';
 import UpdateTshirts from './Adminpanel/UpdateTshirts';
+import Myoreder from './Components/Myoreder';
 
 function App() {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
 
-  const hideNavbarRoutes = ['/login', '/register','/checkout','/cart','/admin','/addnewtshirt','/marvel','/update'];
+  const hideNavbarRoutes = ['/login', '/register','/checkout','/cart','/admin','/addnewtshirt','/marvel','/update','/myorder'];
   const hideDynamicRoutes = ['/tshirt/:id'];
 
   const shouldHideStatic = hideNavbarRoutes.includes(location.pathname.toLowerCase());
@@ -63,6 +64,7 @@ function App() {
         <Route path='/admin' element={<Dashboard/>}></Route>
         <Route path='/addnewtshirt' element={<AddTshirtForm/>}></Route>
         <Route  path='/update' element={<UpdateTshirts/>}></Route>
+        <Route path='/myorder' element={<Myoreder/>}></Route>
       </Routes>
     </>
   );

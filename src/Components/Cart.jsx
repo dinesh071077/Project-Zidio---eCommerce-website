@@ -82,49 +82,81 @@
 // export default Cart;
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Cart() {
   const navigate = useNavigate();
-  const userId = localStorage.getItem("userId"); // from login
   const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Load cart from localStorage on component mount
   useEffect(() => {
-    if (userId) {
-      const storedCart = JSON.parse(localStorage.getItem(`cart_${userId}`)) || [];
-      setCartItems(storedCart);
-    }
-  }, [userId]);
+    const fetchCartItems = async () => {
+      const token = localStorage.getItem('token');
 
-  // Remove item from cart
-  const handleRemoveFromCart = (indexToRemove) => {
-    const updatedCart = cartItems.filter((_, index) => index !== indexToRemove);
-    setCartItems(updatedCart);
-    localStorage.setItem(`cart_${userId}`, JSON.stringify(updatedCart));
+      if (!token) {
+        alert('Please log in to view your cart.');
+        navigate('/login');
+        return;
+      }
+
+      try {
+        const res = await axios.get('http://localhost:5000/api/cart', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setCartItems(res.data.items || []);
+      } catch (err) {
+        console.error('Error fetching cart:', err);
+        alert('Failed to fetch cart items. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCartItems();
+  }, [navigate]);
+
+  const handleRemoveFromCart = async (itemId) => {
+    const token = localStorage.getItem('token');
+
+    try {
+      const res = await axios.delete(`http://localhost:5000/api/cart/remove/${itemId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setCartItems(res.data.items || []);
+    } catch (err) {
+      console.error('Error removing item:', err);
+      alert('Failed to remove item from cart.');
+    }
   };
 
-  const handleCheckout = () => {
-    if (cartItems.length === 0) {
-      alert("Your cart is empty.");
-      return;
-    }
-    navigate("/checkout", { state: { cartItems } });
-  };
+ const handleCheckout = () => {
+  if (cartItems.length === 0) {
+    alert('Your cart is empty.');
+    return;
+  }
 
-  if (!userId) {
-    return (
-      <div className="bg-gray-900 min-h-screen text-white flex flex-col items-center justify-center">
-        <h2 className="text-xl mb-4">Please log in to view your cart.</h2>
-        <button
-          onClick={() => navigate("/login")}
-          className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
-        >
-          Go to Login
-        </button>
-      </div>
-    );
+  const cleanItems = cartItems.map((item) => ({
+    _id: item.productId._id,
+    name: item.productId.name,
+    price: item.productId.price,
+    selectedSize: item.selectedSize,
+    selectedColor: item.selectedColor,
+  }));
+
+  navigate('/checkout', { state: { cartItems: cleanItems } });
+};
+
+
+  if (loading) {
+    return <div className="text-white p-10">Loading cart...</div>;
   }
 
   return (
@@ -144,27 +176,24 @@ function Cart() {
         <div className="space-y-4">
           {cartItems.map((item, index) => (
             <div
-              key={index}
+              key={item._id}
               className="flex justify-between items-center bg-gray-800 p-4 rounded-lg"
             >
               <div className="flex items-center gap-4">
                 <img
-                  src={item.img}
-                  alt={item.name}
+                  src={item.productId.imageUrl}
+                  alt={item.productId.name}
                   className="w-20 h-20 object-cover rounded-md"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = "https://via.placeholder.com/100?text=No+Image";
-                  }}
                 />
                 <div>
-                  <h2 className="font-semibold">{item.name}</h2>
-                  <p className="text-blue-400">₹{item.price}</p>
+                  <h2 className="font-semibold">{item.productId.name}</h2>
+                  <p className="text-blue-400">₹{item.productId.price}</p>
                   <p className="text-gray-300">Size: {item.selectedSize}</p>
+                  <p className="text-gray-300">Color: {item.selectedColor}</p>
                 </div>
               </div>
               <button
-                onClick={() => handleRemoveFromCart(index)}
+                onClick={() => handleRemoveFromCart(item._id)}
                 className="text-red-500 hover:text-red-600"
               >
                 Remove
@@ -177,7 +206,11 @@ function Cart() {
       {cartItems.length > 0 && (
         <div className="mt-6 flex justify-between items-center">
           <p className="text-lg font-semibold">
-            Total: ₹{cartItems.reduce((acc, item) => acc + item.price, 0)}
+            Total: ₹
+            {cartItems.reduce(
+              (acc, item) => acc + (item.productId.price || 0),
+              0
+            )}
           </p>
           <button
             onClick={handleCheckout}
