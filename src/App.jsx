@@ -21,13 +21,16 @@ import Dashboard from './Adminpanel/Dashboard';
 import AddTshirtForm from './Adminpanel/AddTshirtForm';
 import UpdateTshirts from './Adminpanel/UpdateTshirts';
 import Myoreder from './Components/Myoreder';
+import Order from './Adminpanel/Order';
+import User from './Adminpanel/User';
+import Edittshirt from './Adminpanel/Edittshirt';
 
 function App() {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
 
-  const hideNavbarRoutes = ['/login', '/register','/checkout','/cart','/admin','/addnewtshirt','/marvel','/update','/myorder'];
-  const hideDynamicRoutes = ['/tshirt/:id'];
+  const hideNavbarRoutes = ['/login', '/register','/checkout','/cart','/admin','/addnewtshirt','/marvel','/update','/myorder','/order','/user'];
+  const hideDynamicRoutes = ['/tshirt/:id','/edit-tshirt/:id'];
 
   const shouldHideStatic = hideNavbarRoutes.includes(location.pathname.toLowerCase());
   const shouldHideDynamic = hideDynamicRoutes.some((pattern) =>
@@ -65,6 +68,10 @@ function App() {
         <Route path='/addnewtshirt' element={<AddTshirtForm/>}></Route>
         <Route  path='/update' element={<UpdateTshirts/>}></Route>
         <Route path='/myorder' element={<Myoreder/>}></Route>
+        <Route path='/order' element={<Order/>}></Route>
+        <Route path='/user' element={<User/>}></Route>
+        <Route path="/edit-tshirt/:id" element={<Edittshirt/>} />
+
       </Routes>
     </>
   );
