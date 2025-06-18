@@ -10,7 +10,7 @@ import Register from './Components/Register';
 import Tdetails from './Components/Tdetails';
 import Cart from './Components/Cart';
 import Checkout from './Components/Checkout';
-import Fullsleeve from './Components/FullSleeve';
+import Fullsleeve from './Components/Fullsleeve';
 import Halfsleeve from './Components/Halfsleeve';
 import Oversized from './Components/Oversized';
 import Formal from './Components/Formal';
