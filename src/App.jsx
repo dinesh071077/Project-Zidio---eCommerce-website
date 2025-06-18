@@ -51,10 +51,8 @@ function App() {
   }, [location]);
 
   return (
-    <div className="min-h-screen bg-cover bg-fixed bg-center"
-      style={{
-        backgroundImage: "url('https://ik.imagekit.io/zifllo6u3/doctor-strange-2-final-poster.avif?updatedAt=1749998698639')"
-      }}>
+    <>
+
       {loading && <FullScreenLoader />}
       {!shouldHideNavbar && <Homepage />}
 
@@ -83,7 +81,7 @@ function App() {
 
       </Routes>
       <Footer/>
-    </div>
+    </>
   );
 }
 
