@@ -20,7 +20,7 @@ const Customersupport = () => {
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:5000/api/support/query', {
+      const res = await fetch(' https://project-zidio-ecommerce-website-backend.onrender.com/api/support/query', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

@@ -15,7 +15,7 @@ function MyOrders() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/checkout/my-orders', {
+        const res = await axios.get(' https://project-zidio-ecommerce-website-backend.onrender.com/api/checkout/my-orders', {
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
@@ -36,7 +36,7 @@ function MyOrders() {
     if (!confirmCancel) return;
 
     try {
-      await axios.put(`http://localhost:5000/api/orders/${orderId}/cancel`, {}, {
+      await axios.put(` https://project-zidio-ecommerce-website-backend.onrender.com/api/orders/${orderId}/cancel`, {}, {
         headers: { Authorization: `Bearer ${userToken}` }
       });
 

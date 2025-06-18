@@ -20,7 +20,7 @@ function Cart() {
       }
 
       try {
-        const res = await axios.get('http://localhost:5000/api/cart', {
+        const res = await axios.get('https://project-zidio-ecommerce-website-backend.onrender.com/api/cart', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -42,7 +42,7 @@ function Cart() {
     const token = localStorage.getItem('token');
 
     try {
-      const res = await axios.delete(`http://localhost:5000/api/cart/remove/${itemId}`, {
+      const res = await axios.delete(` https://project-zidio-ecommerce-website-backend.onrender.com/api/cart/remove/${itemId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

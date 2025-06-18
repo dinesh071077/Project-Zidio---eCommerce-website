@@ -1,49 +1,3 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-
-// function User() {
-//   const [users, setUsers] = useState([]);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     const fetchUsers = async () => {
-//       try {
-//         const res = await axios.get('http://localhost:5000/api/auth/all-users');
-//         setUsers(res.data.users);
-//       } catch (err) {
-//         console.error("Failed to fetch users:", err);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchUsers();
-//   }, []);
-
-//   return (
-//     <div className="admin-users-page" style={{ padding: '20px', color: 'white', backgroundColor: '#0f172a', minHeight: '100vh' }}>
-//       <h2 className="text-2xl font-bold mb-4">All Users</h2>
-
-//       {loading ? (
-//         <p>Loading users...</p>
-//       ) : users.length === 0 ? (
-//         <p>No users found.</p>
-//       ) : (
-//         users.map((user, index) => (
-//           <div key={user._id} className="user-card" style={{ border: '1px solid #374151', padding: '15px', marginBottom: '20px', borderRadius: '10px', backgroundColor: '#1e293b' }}>
-//             <p className="text-lg font-semibold text-blue-400">User #{index + 1}</p>
-//             <p><strong>Name:</strong> {user.name}</p>
-//             <p><strong>Email:</strong> {user.email}</p>
-//             <p><strong>Role:</strong> {user.role || 'user'}</p>
-//             <p><strong>Registered At:</strong> {new Date(user.createdAt).toLocaleString()}</p>
-//           </div>
-//         ))
-//       )}
-//     </div>
-//   );
-// }
-
-// export default User;
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -60,7 +14,7 @@ function User() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/auth/all-users');
+        const res = await axios.get(' https://project-zidio-ecommerce-website-backend.onrender.com/api/auth/all-users');
         setUsers(res.data.users);
         setFilteredUsers(res.data.users);
       } catch (err) {
@@ -96,7 +50,7 @@ useEffect(() => {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/auth/${userId}`);
+      await axios.delete(` https://project-zidio-ecommerce-website-backend.onrender.com/api/auth/${userId}`);
       setUsers((prev) => prev.filter((user) => user._id !== userId));
     } catch (err) {
       console.error('Delete failed:', err);

@@ -12,7 +12,7 @@ function Formal() {
   useEffect(() => {
     const fetchFormalTshirts = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/tshirt/type/Formal T-Shirt');
+        const res = await fetch(' https://project-zidio-ecommerce-website-backend.onrender.com/api/tshirt/type/Formal T-Shirt');
         const data = await res.json();
         setTshirts(data);
         setIsLoading(false);

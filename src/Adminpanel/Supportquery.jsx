@@ -10,7 +10,7 @@ const  Supportquery = () => {
   useEffect(() => {
     const fetchQueries = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/support/get');
+        const res = await fetch(' https://project-zidio-ecommerce-website-backend.onrender.com/api/support/get');
         const data = await res.json();
         setQueries(data);
       } catch (err) {

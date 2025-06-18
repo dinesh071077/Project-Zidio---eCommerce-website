@@ -12,7 +12,7 @@ const EditTshirt = () => {
   useEffect(() => {
     const fetchTshirt = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/put/single/${id}`);
+        const res = await fetch(` https://project-zidio-ecommerce-website-backend.onrender.com/api/put/single/${id}`);
         const data = await res.json();
         if (res.ok) {
           setTshirt(data);
@@ -101,7 +101,7 @@ const EditTshirt = () => {
     };
 
     try {
-      const res = await fetch(`http://localhost:5000/api/put/update/${id}`, {
+      const res = await fetch(` https://project-zidio-ecommerce-website-backend.onrender.com/api/put/update/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(finalPayload),

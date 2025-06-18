@@ -39,7 +39,7 @@ const handlePlaceOrder = async () => {
 
     // 1. Create Order
     const { data } = await axios.post(
-      'http://localhost:5000/api/checkout/create',
+      ' https://project-zidio-ecommerce-website-backend.onrender.com/api/checkout/create',
       { amount: total }, // amount in rupees
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -55,7 +55,7 @@ const handlePlaceOrder = async () => {
         try {
           // 2. Verify Signature
           const verifyRes = await axios.post(
-            'http://localhost:5000/api/checkout/verify',
+            ' https://project-zidio-ecommerce-website-backend.onrender.com/api/checkout/verify',
             {
               razorpayOrderId: response.razorpay_order_id,
               razorpayPaymentId: response.razorpay_payment_id,
@@ -69,7 +69,7 @@ const handlePlaceOrder = async () => {
           if (verifyRes.data.success) {
             // 3. Confirm Order
             await axios.post(
-              'http://localhost:5000/api/checkout/confirm',
+              ' https://project-zidio-ecommerce-website-backend.onrender.com/api/checkout/confirm',
               {
                 items,
                 totalAmount: total,

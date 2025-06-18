@@ -12,7 +12,7 @@ function Fullsleeve() {
   useEffect(() => {
     const fetchTshirts = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/tshirt/type/Full Sleeve');
+        const res = await fetch(' https://project-zidio-ecommerce-website-backend.onrender.com/api/tshirt/type/Full Sleeve');
         const data = await res.json();
         setTshirts(data);
         setIsLoading(false);

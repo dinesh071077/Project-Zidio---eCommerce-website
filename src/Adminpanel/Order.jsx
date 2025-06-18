@@ -9,7 +9,7 @@ function AdminOrders() {
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/checkout/all');
+      const res = await axios.get(' https://project-zidio-ecommerce-website-backend.onrender.com/api/checkout/all');
       setOrders(res.data.orders);
     } catch (err) {
       console.error('Error fetching orders:', err);
@@ -24,7 +24,7 @@ function AdminOrders() {
 
   const updateStatus = async (orderId, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/checkout/${orderId}`, {
+      await axios.put(` https://project-zidio-ecommerce-website-backend.onrender.com/api/checkout/${orderId}`, {
         status: newStatus
       });
       fetchOrders();

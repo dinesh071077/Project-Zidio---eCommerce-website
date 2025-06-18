@@ -111,7 +111,7 @@ const AddTshirtForm = () => {
     const finalPayload = payload.length === 1 ? payload[0] : payload;
 
     try {
-      const response = await fetch('http://localhost:5000/api/products/add', {
+      const response = await fetch(' https://project-zidio-ecommerce-website-backend.onrender.com/api/products/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(finalPayload),

@@ -26,7 +26,7 @@ const Personaldetails = ({ user }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/user/update-profile', {
+      const res = await fetch(' https://project-zidio-ecommerce-website-backend.onrender.com/api/user/update-profile', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

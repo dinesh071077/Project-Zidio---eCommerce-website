@@ -63,7 +63,7 @@ function Homepage() {
       if (!token) return;
 
       try {
-        const res = await axios.get("http://localhost:5000/api/auth/profile", {
+        const res = await axios.get(" https://project-zidio-ecommerce-website-backend.onrender.com/api/auth/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -93,7 +93,7 @@ function Homepage() {
       if (!token) return;
 
       try {
-        const res = await axios.get('http://localhost:5000/api/cart', {
+        const res = await axios.get(' https://project-zidio-ecommerce-website-backend.onrender.com/api/cart', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
