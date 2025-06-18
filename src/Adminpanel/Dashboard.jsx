@@ -347,6 +347,7 @@ const Dashboard = () => {
     { name: 'Update Product', href: '/update', icon: <FaTshirt className="text-blue-400" /> },
     { name: 'Orders', href: '/order', icon: <MdShoppingCart className="text-blue-400" /> },
     { name: 'Users', href: '/user', icon: <MdPeople className="text-blue-400" /> },
+     { name: 'Customer Qeries', href: '/adminsupport', icon: <MdPeople className="text-blue-400" /> },
   ];
 
   return (

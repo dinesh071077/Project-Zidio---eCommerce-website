@@ -24,14 +24,18 @@ import Myoreder from './Components/Myoreder';
 import Order from './Adminpanel/Order';
 import User from './Adminpanel/User';
 import Edittshirt from './Adminpanel/Edittshirt';
+import Footer from './Components/Footer';
+import Customersupport from './Components/Customersupport';
+import Supportquery from './Adminpanel/Supportquery';
 
 function App() {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
 
-  const hideNavbarRoutes = ['/login', '/register','/checkout','/cart','/admin','/addnewtshirt','/marvel','/update','/myorder','/order','/user'];
+  const hideNavbarRoutes = ['/login', '/register','/checkout','/cart','/admin','/addnewtshirt','/update','/myorder','/order','/user','/support','/adminsupport'];
   const hideDynamicRoutes = ['/tshirt/:id','/edit-tshirt/:id'];
 
+  
   const shouldHideStatic = hideNavbarRoutes.includes(location.pathname.toLowerCase());
   const shouldHideDynamic = hideDynamicRoutes.some((pattern) =>
     matchPath({ path: pattern, end: true }, location.pathname)
@@ -47,7 +51,10 @@ function App() {
   }, [location]);
 
   return (
-    <>
+    <div className="min-h-screen bg-cover bg-fixed bg-center"
+      style={{
+        backgroundImage: "url('https://ik.imagekit.io/zifllo6u3/doctor-strange-2-final-poster.avif?updatedAt=1749998698639')"
+      }}>
       {loading && <FullScreenLoader />}
       {!shouldHideNavbar && <Homepage />}
 
@@ -71,9 +78,12 @@ function App() {
         <Route path='/order' element={<Order/>}></Route>
         <Route path='/user' element={<User/>}></Route>
         <Route path="/edit-tshirt/:id" element={<Edittshirt/>} />
+        <Route path='/support' element={<Customersupport/>}></Route>
+         <Route path='/adminsupport' element={<Supportquery/>}></Route>
 
       </Routes>
-    </>
+      <Footer/>
+    </div>
   );
 }
 
