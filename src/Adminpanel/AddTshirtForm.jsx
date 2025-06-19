@@ -210,7 +210,7 @@ const AddTshirtForm = () => {
               <option value="Full Sleeve">Full Sleeve</option>
               <option value="Half Sleeve">Half Sleeve</option>
               <option value="Over Sized">Over Sized</option>
-              <option value="Formal T-Shirt">Formal T-Shirt</option>
+              <option value="Formal T-Shirt">Hoodies</option>
               <option value="Sports T-Shirt">Sports T-Shirt</option>
               <option value="Marvel T-Shirt">Marvel T-Shirt</option>
             </select>

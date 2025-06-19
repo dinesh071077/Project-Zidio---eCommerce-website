@@ -146,7 +146,7 @@ function Homepage() {
             <li><a href="/fullsleeve" className="hover:text-blue-400 transition">Full Sleeve</a></li>
             <li><a href="/halfsleeve" className="hover:text-blue-400 transition">Half Sleeve</a></li>
             <li><a href="/oversized" className="hover:text-blue-400 transition">Over Sized</a></li>
-            <li><a href="/formal" className="hover:text-blue-400 transition">Formal T-Shirt</a></li>
+            <li><a href="/formal" className="hover:text-blue-400 transition">Hoddies</a></li>
             <li><a href="/sport" className="hover:text-blue-400 transition">Sports T-Shirt</a></li>
             <li><a href="/marvel" className="hover:text-blue-400 transition">Marvel T-Shirt</a></li>
           </ul>
@@ -291,7 +291,7 @@ function Homepage() {
             <li><a href="/fullsleeve" className="hover:text-blue-400 transition">Full Sleeve</a></li>
             <li><a href="/halfsleeve" className="hover:text-blue-400 transition">Half Sleeve</a></li>
             <li><a href="/oversized" className="hover:text-blue-400 transition">Over Sized</a></li>
-            <li><a href="/formal" className="hover:text-blue-400 transition">Formal T-Shirt</a></li>
+            <li><a href="/formal" className="hover:text-blue-400 transition">Hoodies</a></li>
             <li><a href="/sport" className="hover:text-blue-400 transition">Sports T-Shirt</a></li>
             <li><a href="/marvel" className="hover:text-blue-400 transition">Marvel T-Shirt</a></li>
           </ul>
