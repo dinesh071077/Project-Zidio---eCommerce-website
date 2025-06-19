@@ -29,7 +29,7 @@ const UpdateTshirts = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this T-shirt?')) {
       try {
-        const res = await fetch(`http://localhost:5000/api/put/delete/${id}`, {
+        const res = await fetch(` https://project-zidio-ecommerce-website-backend.onrender.com/api/put/delete/${id}`, {
           method: 'DELETE',
         });
 
